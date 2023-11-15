@@ -1,0 +1,88 @@
+<!-- 바닐라 자바스크립와 코드비교를 위한 리액트 코드이지만 좀 어려운 방식 -->
+<!-- 실제로 개발자들은 사용하지 않는 방식이지만 이해를 위함 -->
+<!-- html에는 보통 id=root를 가진 div만 적어두고 나머지는 다 reactJS로 만듬 -->
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <div id="root"></div>
+  </body>
+
+  <!-- 리액트JS 설치 위해서 두개(react 와 reactDOM)의 JS 코드를 import 해야함 -->
+  <!--공식홈 들어가서 링크 https://reactjs.org/docs/cdn-links.html-->
+  <!-- 밑에 두개 CDN 링크 복붙 -->
+  <script
+    crossorigin
+    src="https://unpkg.com/react@18/umd/react.development.js"
+  ></script>
+  <script
+    crossorigin
+    src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+  ></script>
+  <!-- 개발자 창에 React 쓰면 보임 이제 우린 React 코드를 쓸 수 있음 -->
+
+  <!-- 이번에는 html의 모든 element를 리액트JS 로 만들 예정 -->
+  <!-- 리액트JS 는 어플리케이션이 매우 interactive 한 UI를 만들게 도와주고 (엔진역할) -->
+  <!-- reactDOM은 library 혹은 package 인데 react elemnet 를 html안에 둘 수 있도록 해줌. -->
+  <script>
+    // 방식이 document가 아닌 React 객체에 element 생성함.
+    // React.createElement("생성할태크",{propety 예를들어 id:"" 또는 class:""}, content);
+    // const span =React.createElement(
+    //     "span",
+    //     { id: "sexy-span", style: {color:"red"} },
+    //     "hello"
+    //     );
+
+    // ReactDOM.render(배치할 element, 배치할 위치);
+    // react element 를 가지고 html로 만들어 배치한다는 뜻
+    // 배치할 위치는 보통 html에 root를 id 로 가지는 div를 하나 만들어두고 시작함.
+    // const root = document.getElementById("root");
+    // ReactDOM.render(span,root); //17버전 작동안함
+    // ReactDOM.createRoot(root).render(div); //18버전
+
+    // html에 span태그 한줄의 코드로 쓸수 있는데 왜 우리는 이렇게 복잡하게 하고 있나?
+    // 리액트JS 에서는 모든게 JS로 시작하고 그 다음 html 로 된다.
+    // 기존의 방식과 반대- 이것이 핵심 - 이말인 즉슨 리액트JS가 결과물인 html을 업데이트 할 수 있다는 것.
+    // 유저에게 보여질 내용을 컨트롤 할 수 있다는 뜻
+    // html에서 만들고 JS에서 가져온 후(getElemnt..) 업데이트 하는 방식보다는
+    // 리액트JS 에게 원하는 html을 바로 업데이트 하라고 지시할 수 있음.
+    // 그러기 위해서는 JS 에서 시작하고, html에서 끝낸다.
+    // JS에서 element를 만들고, ReactJS 가 그것을 html로 번역한다.
+
+    // 따라서 id=root 인 div를 html에서 만든후 가져온다.
+    const root = document.getElementById("root");
+
+    // 필요한 element를 생성한다. 첫번째 인자: "생성태그", 두번째인자: {property}, 세번째인자: "content"
+    // 여기 보면 한줄에 createElement, eventListener 와 innerText 같은 코드들이 모두 구현된 걸 볼 수 있음
+    // 이것이 React JS 의 파워
+    const h3 = React.createElement(
+      "h3",
+      {
+        id: "title",
+        onMouseEnter: () => {
+          console.log("Mouse entered");
+        },
+      },
+      "Hello, I'm a span"
+    );
+    const button = React.createElement(
+      "button",
+      {
+        onClick: () => console.log("I'm clicked"),
+        style: {
+            backgroundColor: "tomato",
+        }
+      },
+      "Click me"
+    );
+
+    // h3 와 button을 동시에 render 하고 싶을때 container로 감싼다
+    const div = React.createElement("div", null, [h3, button]);
+
+    // JS 코드를 html 에 render.
+    //ReactDom.render(div,root) //17버전 동작안함
+    ReactDOM.createRoot(root).render(div); //18버전
+  </script>
+</html>
+
+<!-- 동작하지만 경고뜸- 개발툴 말고 프로덕트로 하면 없어진다고 함 -->
+<!-- react.development.js:199 Warning: Each child in a list should have a unique "key" prop. -->
