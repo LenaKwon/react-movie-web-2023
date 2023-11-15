@@ -1,0 +1,125 @@
+<!-- react 코드에서 react.createElement 를 대체하는 jsx 방식 -->
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <div id="root"></div>
+  </body>
+  <script
+    crossorigin
+    src="https://unpkg.com/react@18/umd/react.development.js"
+  ></script>
+  <script
+    crossorigin
+    src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+  ></script>
+  <!-- 바벨 링크 -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!--  바벨 링크 말고도 스크립트 시작태그안에 type 적어줘야함 -->
+  <script type="text/babel">
+    const root = document.getElementById("root");
+   
+    // reactJS code
+    // const title = React.createElement(
+    //   "h3",
+    //   {
+    //     id: "title",
+    //     onMouseEnter: () => {
+    //       console.log("Mouse entered");
+    //     },
+    //   },
+    //   "Hello, I'm a span"
+    // );
+
+    //jsx code
+    const Title = ()=>(
+        <h3  id= "title" onMouseEnter = {() => console.log("Mouse entered")}>
+             Hello, I'm a span
+        </h3>
+    );
+
+    
+    // JSX code
+    // 위의 코드를 JSX 로 아래처럼 바꿨다. 
+    
+    // jsx 문서 https://legacy.reactjs.org/docs/introducing-jsx.html
+    // JSX is a syntax extension to JavaScript
+    // 예를 들면 const element = <h1>Hello, world!</h1>;
+    // This funny tag syntax is neither a string nor HTML.
+    // JSX produces React “elements”. We will explore rendering them to the DOM 
+    // React doesn not require using JSX, but most people find it helpful as a visual aid 
+    // when working with UI inside the JavaScript code. 
+    // It also allows React to show more useful error and warning messages.
+
+    
+    // 하지만 브라우저는 JSX를 읽지 못하기 때문에 JS 코드로 바꿔주는 과정이 필요하다.
+    // 그것이 바로 바벨, JS compiler (code transformer)
+    // 바벨공식홈 https://babeljs.io/docs/usage
+    // 바벨설치 https://babeljs.io/docs/babel-preset-env-standalone
+    // 바벨 standalone 링크 붙여주고
+    // 스크립트 시작태그 type을 넣어줘야 동작함 <script type="text/babel;">
+    // 지금은 바벨 링크를 사용하지만 이건 빠르지 않은 방법이라 이 강의에서만 사용할 예정임.    
+
+    // 바벨페이지에 tryout 태그 클릭하면 코드 바꿔주는 걸 해볼 수 있음.
+    // 사실 2023년 11월에는 2021년의 강의에서 보여진 코드와 다르게 
+    // createElement가 없이 _jsx 로 대체된것을 볼 수 있음
+    // 문법은 조금 달라졌지만, 무엇보다 중요한 점은 
+    // 우린 React사용시 jsx를 쓸것이고 babel compiler를 돌릴 예정이니
+    // 문법 변화를 신경쓰기보다는 어떻게 동작한다는 걸 알고 있으면 됨.
+    // import { jsx as _jsx } from "react/jsx-runtime";
+    // const h3 = /*#__PURE__*/_jsx("h3", {
+    //   id: "title",
+    //   onMouseEnter: () => console.log("Mouse entered"),
+    //   children: "Hello, I'm a span"
+    // });
+
+    // 개발자도구 element 를 보면 script엔 우리가 적은 jsx 가 있고,
+    // jsx 코드를 바벨이 번역하여 html div 안에 들어가 있는 걸 확인할 수 있음.
+
+    //jsx
+    const Button = ()=> ( //괄호로 감싸기
+        <button 
+            style={{
+                backgroundColor: "tomato",
+            }} 
+            onClick={() => console.log("I'm clicked")}
+        >
+        Click me
+        </button>
+    );
+    
+    // reactJS
+    // const button = React.createElement(
+    //   "button",
+    //   {
+    //     onClick: () => console.log("I'm clicked"),
+    //     style: {
+    //         backgroundColor: "tomato",
+    //     }
+    //   },
+    //   "Click me"
+    // );
+
+
+    // 이제 마지막 div 부분을 jsx 형식으로 고쳐보자
+    // 먼저 아래 코드를 작성하면서 각각의 title button의 첫글자를 대문자로 바꿔줌
+    // 대문자 시작은 html 코드와 구분되며 react component 라는 것을 말함.
+    // 아래 코드를 실행하면 Title Button 이란 텍스트만 나옴. 
+    // 우리가 원하는 기능으로 구현시키기 위해 Title, Button 상수를 함수로 변경시켜야함.
+    // 간편하게 ()=> arrow function 을 이용해 수정함.
+    // 그리고 div 안에 텍스트를 태그로 변경
+    const Container =()=> (
+        <div> 
+            <Title /> 
+            <Button /> 
+        </div> 
+    )
+   
+    //const div = React.createElement(<Container />, null, [Title, button]);
+
+    ReactDOM.createRoot(root).render(<Container />); //18버전
+    </script>
+
+</html>
+
+<!-- 동작하지만 경고뜸- 개발툴 말고 프로덕트로 하면 없어진다고 함 -->
+<!-- react.development.js:199 Warning: Each child in a list should have a unique "key" prop. -->

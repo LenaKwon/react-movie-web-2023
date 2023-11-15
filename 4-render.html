@@ -1,0 +1,52 @@
+ <!-- state -->
+ <!-- render -->
+ <!-- 변경되는 것만 업데이트됨. -->
+ <!-- 속도에 대한 장점이 있음. -->
+<!DOCTYPE html>
+<html lang="en">
+   <body>
+      <div id="root"></div>
+   </body>
+   <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+   <!-- 바벨 링크 -->
+   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+   <!--  바벨 링크 말고도 스크립트 시작태그안에 type 적어줘야함 -->
+   <script type="text/babel">
+    // 클릭이벤트를 카운터 해주고, html에 업데이트 해주기
+
+    const root = document.getElementById("root");
+    let counter = 0;
+    function countUp(){
+        counter = counter+1;
+        render();
+    }
+    function render(){
+        ReactDOM.createRoot(root).render(<Container />);
+    }
+    
+    const Container =()=> (
+              <div>
+                <h3 > Total Click : {counter} </h3>
+                <button onClick={countUp}> Click me </button>
+              </div>
+    )
+    render();
+   </script>
+ <!-- JS 에선 Total Click : 0 들어있던 span 전체가 업데이트 되지만
+ React 에서는 숫자 부분만 업데이트 되는것을 확인해 볼 수 있음.
+ 뭔가를 변경하거나 업데이트할때 여러가지 요소를 리렌더링하려고 해도 전부다 새로 생성하지 않고
+ 변경에 필요한 최소한의 요소만을 가상 DOM에 반영하여 불필요한 연산을 줄여줌.
+ 따라서 복잡한 UI 업데이트를 효과적으로 처리할 수 있으며, 이를 통해 웹의 응답성을 향상시키고 사용자 경험을 개선할 수 있다.
+ 인터렉티브에 최적화된 React
+    
+ Jsx에서 자바스크립트를 입력하려면 중괄호 내부에 입력해준다. 이벤트 리스너는 inline 방식으로 추가해준다.
+ state는 상태, 해당 컴포넌트의 상태를 나타내는 변수이다.
+ 단순히 이벤트를 감지해서 변수값을 변경한다고 해도 그게 화면 변화로 감지되진 않는다. 왜냐면 render작업을 해주어야 하기때문이다.
+
+ 즉 상태변화를 화면에 보여주려면 render를 다시해주어야한다.
+ 하지만 상태가 바뀔때마다(폼,로그인페이지,알림..등등) render 메서드를 호출하는것은 비효율적이다.
+ 이를 리액트의 슈퍼파워, hook으로 해결하자 => useState() -->
+</html>
+

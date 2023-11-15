@@ -1,0 +1,51 @@
+<!-- reactJS 코드를 간단히 표현하는 jsx 방식 -->
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <div id="root"></div>
+  </body>
+  <script
+    crossorigin
+    src="https://unpkg.com/react@18/umd/react.development.js"
+  ></script>
+  <script
+    crossorigin
+    src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+  ></script>
+  <!-- 바벨 링크 -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <!--  바벨 링크 말고도 스크립트 시작태그안에 type 적어줘야함 -->
+  <script type="text/babel">
+    const root = document.getElementById("root");
+   
+    const Title = ()=>(
+        <h3  id= "title" onMouseEnter = {() => console.log("Mouse entered")}>
+             Hello, I'm a span
+        </h3>
+    );
+
+    const Button = ()=> ( 
+        <button 
+            style={{
+                backgroundColor: "tomato",
+            }} 
+            onClick={() => console.log("I'm clicked")}
+        >
+        Click me
+        </button>
+    );
+    
+    const Container =()=> (
+        <div> 
+            <Title /> 
+            <Button /> 
+        </div> 
+    )
+   
+
+    ReactDOM.createRoot(root).render(<Container />); //18버전
+    </script>
+
+</html>
+
