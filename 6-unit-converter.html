@@ -19,7 +19,7 @@
          const [amount, setAmount] = React.useState(0);
          // console.log(amount)
          // inverted 초기값을 false 로 설정한 이유가 minute의 input을 기본세팅으로 설정했을때
-         // flip 버튼이 아직 눌려지지 않은 상태이니 not inverted 인 false 로 설정한 것 같음.
+         // invert 버튼이 아직 눌려지지 않은 상태이니 not inverted 인 false 로 설정한 것 같음.
          const [inverted, setInverted] = React.useState(false);
          const onChange = (event) => {
             //console.log(event)
@@ -36,15 +36,15 @@
          };
         
          // input 은 reactjs 에서 uncontrolled component Why? 밑의 설명참조
-         // 그래서 useState를 이용해 value를 넣어주고 controll 함.
+         // 그래서 useState를 이용해 value를 넣어주고 control 함.
          return (
             <div>
                <h3 className='title'> Unit Converter </h3>
                <label htmlfor='minutes'>Minutes</label>
                <div>
                   <input
-                    //inverted 초기값설정 false 이기 때문에 falsy일때 반환값은 세번째항 amount
-                    // amount 는 현재값
+                    // inverted 초기값설정이 false 이기 때문에 falsy일때 반환값은 세번째항인 amount.
+                    // amount 는 현재값(state 데이터)
                     // 입력시 개발자도구창을 보면 계속 값을 바꾸어도 amount 값인 value='0'이다. 왜??
                      value={inverted ? amount * 60 : amount} //control value
                      id='minutes'
@@ -58,7 +58,7 @@
                <label htmlfor='hours'>Hours</label>
                <div>
                   <input
-                     value={inverted ? amount : Math.round(amount / 60)}
+                     value={inverted ? amount : Math.round(amount / 60)}//false 세번째항 값 반환
                      id='hours'
                      placeholer='Hours'
                      type='number'
@@ -76,9 +76,9 @@
    </script>
 </html>
 
-<!-- 자바스크립트에서 jsx 를 쓸때 유의할 점이 이미 선점된 용어 reserved 는 다르게 쓰인다 
+<!-- 자바스크립트에서 jsx 를 쓸때 유의할 점이 이미 선점된 용어 (reserved word) 는 다르게 쓰인다 
 예를 들어 for 는 htmlfor , class 는 className 으로 써줘야 한다.
-react.production.min.js 를 쓸때는 괜찮지만 react.development.js 를 쓰면 아래와 같은 에러가 뜬다
+라이브러리 쓸때 react.production.min.js 를 쓸때는 괜찮지만 react.development.js 를 쓰면 아래와 같은 에러가 뜬다
 react-dom.development.js:73 Warning: Invalid DOM property `for`. Did you mean `htmlFor`?
     at label
     at form
@@ -103,12 +103,7 @@ https://reactjs-kr.firebaseapp.com/docs/forms.html#%EC%A0%9C%EC%96%B4%EB%90%98%E
 https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable
  -->
 
- <!-- flip
-const onInvert = () => setInverted(!inverted);
--> inverted가 true라면 부정명제인 !inverted는 false
--> false라면 true
-
-state값으로 input을 enabled할지 disabled 할지를 결정할 수 있음
+ <!--state값으로 input을 enabled할지 disabled 할지를 결정할 수 있음-->
 
 
 
