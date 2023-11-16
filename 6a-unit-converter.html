@@ -5,12 +5,12 @@ value ={inverted} 는 삼항연산자 즉 조건연산자를 사용하기 위한
 condition ? exprIfTrue : exprIfFalse;
 disabled={inverted} Boolean 타입을 이용해 input를 입력 가능/불가능하게 만드는 것일 뿐이다. 
 disabled 만 input prop으로 넣으면 동작하는 것은 default 값이 true 라는 뜻
-여기선 disabled 가 flip 버튼이 눌려질때마다 활성화/비활성화 되어야 하기 때문에 inverted란 초기값으로 지정해서 사용하는 것.
+여기선 disabled 가 invert 버튼이 눌려질때마다 활성화/비활성화 되어야 하기 때문에 inverted란 초기값으로 지정해서 사용하는 것.
 -->
 <!-- 
     가장 중요한 함수는 onInvert 인데 inverted 값(state값,현재값)을 을 반대로 전환시켜서 set 해주는 역할을 한다
     즉, 삼항연산자의 조건인 inverted와 disabled 의 inverted 가 동시에 반대값으로 전환되는 것이다.
-    그래서 둘 다 현재 state 값인 fipped 를 사용한 것이다.
+    그래서 둘 다 현재 state 값인 inverted 를 사용한 것이다.
  -->
 <!DOCTYPE html>
 <html lang="en">
@@ -80,7 +80,7 @@ disabled 만 input prop으로 넣으면 동작하는 것은 default 값이 true 
 
 <!-- 
     HTML에서 input, textarea, select 같은 form 요소는 자기만의 state를 가지고 유저 입력에 따라 업데이트된다
-    따라서 reactjs 에서는 uncontrolled 컴포넌트인데, ustState 란 hook 을 사용하여
-    input value를 control 하고 업데이트 하여서 컨버터를 만들 수 있는 걸 보여줌.
-    html 의 input 은 입력만이 가능한 태그인데, 여기선 출력을 해서 입력창에 전환값을 보여주고 있음!! 
+    따라서 reactjs 에서는 이것들이 uncontrolled 컴포넌트인데, useState 란 hook 을 사용하여
+    input value를 controled로 바꾸고 값을 직접 업데이트 해서 컨버터를 만들 수 있는 걸 보여줌.
+    html에서 input 은 원래 입력만이 가능한 태그인데, 여기선 값을 출력을 해서 입력창에 전환값을 보여주고 있음!! 
  -->
