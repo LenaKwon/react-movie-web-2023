@@ -17,7 +17,10 @@
       function App() {
          // event 의 target은 방금 바뀐 input 태그를 말함, 그 target 안의 value값을 가져옴
          const [amount, setAmount] = React.useState(0);
-         const [flipped, setFlipped] = React.useState(false);
+         // console.log(amount)
+         // inverted 초기값을 false 로 설정한 이유가 minute의 input을 기본세팅으로 설정했을때
+         // flip 버튼이 아직 눌려지지 않은 상태이니 not inverted 인 false 로 설정한 것 같음.
+         const [inverted, setInverted] = React.useState(false);
          const onChange = (event) => {
             //console.log(event)
             //console.log(event.target.value)
@@ -26,9 +29,10 @@
             setAmount(event.target.value);
          };
          const reset = () => setAmount(0);
-         const onFlip = () => {
+         const onInvert = () => {
             reset();
-            setFlipped((current) => !current);
+            // 함수형식으로 현재 값을 받은 후 변환시켜주는 것이 확실한 방법
+            setInverted((current) => !current);
          };
         
          // input 은 reactjs 에서 uncontrolled component Why? 밑의 설명참조
@@ -39,27 +43,31 @@
                <label htmlfor='minutes'>Minutes</label>
                <div>
                   <input
-                     value={flipped ? amount * 60 : amount} //control value
+                    //inverted 초기값설정 false 이기 때문에 falsy일때 반환값은 세번째항 amount
+                    // amount 는 현재값
+                    // 입력시 개발자도구창을 보면 계속 값을 바꾸어도 amount 값인 value='0'이다. 왜??
+                     value={inverted ? amount * 60 : amount} //control value
                      id='minutes'
                      placeholer='Minutes'
                      type='number'
                      onChange={onChange} //listening event
-                     disabled={flipped} //{flipped===true} 결국 false값이어야 한다는 소리(입력하게)
+                     disabled={inverted} //false  인풋 활성화상태 즉 minutes을 hours로 변환중인 상태
+                     //{inverted===true} 이렇게 표현도 가능
                   />
                </div>
-               <h4>You want to convert {amount}</h4>
                <label htmlfor='hours'>Hours</label>
                <div>
                   <input
-                     value={flipped ? amount : Math.round(amount / 60)}
+                     value={inverted ? amount : Math.round(amount / 60)}
                      id='hours'
                      placeholer='Hours'
                      type='number'
                      onChange={onChange}
-                     disabled={!flipped} //{flipped===false} 결국 true값이어야한다는 소리(입력못하게)
+                     disabled={!inverted} //true  인풋 비활성화상태 즉 minutes을 hours로 변환중인 상태
+                     //{inverted===false} 이렇게 표현도 가능
                   />
                   <button onClick={reset}>Reset</button>
-                  <button onClick={onFlip}>Flip</button>
+                  <button onClick={onInvert}>{inverted? 'turn back' : 'invert' }</button>
                </div>
             </div>
          );
@@ -96,8 +104,8 @@ https://react.dev/reference/react-dom/components/input#controlling-an-input-with
  -->
 
  <!-- flip
-const onFlip = () => setFlipped(!flipped);
--> flipped가 true라면 부정명제인 !flipped는 false
+const onInvert = () => setInverted(!inverted);
+-> inverted가 true라면 부정명제인 !inverted는 false
 -> false라면 true
 
 state값으로 input을 enabled할지 disabled 할지를 결정할 수 있음

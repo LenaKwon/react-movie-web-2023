@@ -1,12 +1,17 @@
-<!-- flipped 초기값을 true 로 설정해서 이해를 돕기 위한 코드 -->
+<!-- inverted 초기값을 true 로 설정해서 이해를 돕기 위한 코드 -->
 <!-- 
-value ={flipped}에서의 'flipped'와 disabled={flipped}에서의 'flipped'는 전혀 별개인 것으로 생각하면 쉽다.
-value ={flipped} 는 삼항연산자 즉 조건연산자를 사용하기 위한 Boolean 타입으로써 이용한 것이고,
+value ={inverted}에서의 'inverted'와 disabled={inverted}에서의 'inverted'는 전혀 별개인 것으로 생각하면 쉽다.
+value ={inverted} 는 삼항연산자 즉 조건연산자를 사용하기 위한 Boolean 타입으로써 이용한 것이고,
 condition ? exprIfTrue : exprIfFalse;
-disabled={flipped} Boolean 타입을 이용해 input를 입력 가능/불가능하게 만드는 것일 뿐이다. 
+disabled={inverted} Boolean 타입을 이용해 input를 입력 가능/불가능하게 만드는 것일 뿐이다. 
 disabled 만 input prop으로 넣으면 동작하는 것은 default 값이 true 라는 뜻
-여기선 disabled 가 flip 버튼이 눌려질때마다 활성화/비활성화 되어야 하기 때문에 flipped란 초기값으로 지정해서 사용하는 것.
+여기선 disabled 가 flip 버튼이 눌려질때마다 활성화/비활성화 되어야 하기 때문에 inverted란 초기값으로 지정해서 사용하는 것.
 -->
+<!-- 
+    가장 중요한 함수는 onInvert 인데 inverted 값(state값,현재값)을 을 반대로 전환시켜서 set 해주는 역할을 한다
+    즉, 삼항연산자의 조건인 inverted와 disabled 의 inverted 가 동시에 반대값으로 전환되는 것이다.
+    그래서 둘 다 현재 state 값인 fipped 를 사용한 것이다.
+ -->
 <!DOCTYPE html>
 <html lang="en">
    <body>
@@ -20,17 +25,17 @@ disabled 만 input prop으로 넣으면 동작하는 것은 default 값이 true 
    <script type="text/babel">
       function App() {
          const [amount, setAmount] = React.useState(0);
-         //flipped 초기값 = true
-         const [flipped, setFlipped] = React.useState(true);
+         //inverted 초기값 = true
+         const [inverted, setInverted] = React.useState(true);
          const onChange = (event) => {
             setAmount(event.target.value);
          };
          const reset = () => setAmount(0);
-         const onFlip = () => {
+         const onInvert = () => {
             reset();
             // 현재 state 값이 true 이면 false 로 바꿔주고, 
             // 현재 state 값이 false 이면 true 로 바꿔주는 역할
-            setFlipped((current) => !current);
+            setInverted((current) => !current);
          };
         
          return (
@@ -39,32 +44,32 @@ disabled 만 input prop으로 넣으면 동작하는 것은 default 값이 true 
                <label htmlfor='minutes'>Minutes</label>
                <div>
                   <input
-                    // input value 에 사용된 flipped 값은 default가 true 로 설정되어 있으므로
-                    // minute 과 hours 의 input value 둘다 조건이 truthy 일때 실행되는 첫번째(물음표뒤)결과값 반환 
-                    // flipped===true 이면 amount 반환 아니면 amount * 60 반환
-                    // flipped default 값은 true  따라서 첫번째 Math.round(amount / 60)반환
-                     value={flipped ? amount : amount * 60 }
+                    // input value 에 사용된 inverted 값은 default가 true 로 설정되어 있으므로
+                    // minute 과 hours 의 input value 둘다 조건이 truthy 일때 실행되는 두번째항 값 반환 
+                    // inverted===true 이면 amount 반환 아니면 amount * 60 반환
+                    // inverted default 값은 true  따라서 첫번째 Math.round(amount / 60)반환
+                     value={inverted ? amount : amount * 60 }
                      id='minutes'
                      placeholer='Minutes'
                      type='number'
                      onChange={onChange} 
-                     disabled={!flipped} //false
+                     disabled={!inverted} //false
                   />
                </div>
                <label htmlfor='hours'>Hours</label>
                <div>
                   <input
-                    // flipped===true 이면 Math.round(amount / 60) 반환 아니면 amount 반환
-                    // flipped default 값은 true 따라서 첫번째 Math.round(amount / 60)반환
-                     value={flipped ? Math.round(amount / 60) : amount }
+                    // inverted===true 이면 Math.round(amount / 60) 반환 아니면 amount 반환
+                    // inverted default 값은 true 따라서 두번째항 Math.round(amount / 60)반환
+                     value={inverted ? Math.round(amount / 60) : amount }
                      id='hours'
                      placeholer='Hours'
                      type='number'
                      onChange={onChange}
-                     disabled={flipped} //true
+                     disabled={inverted} //true
                   />
                   <button onClick={reset}>Reset</button>
-                  <button onClick={onFlip}>Flip</button>
+                  <button onClick={onInvert}>{inverted? 'invert' : 'turn back' }</button>
                </div>
             </div>
          );
@@ -72,3 +77,10 @@ disabled 만 input prop으로 넣으면 동작하는 것은 default 값이 true 
       ReactDOM.createRoot(root).render(<App />);
    </script>
 </html>
+
+<!-- 
+    HTML에서 input, textarea, select 같은 form 요소는 자기만의 state를 가지고 유저 입력에 따라 업데이트된다
+    따라서 reactjs 에서는 uncontrolled 컴포넌트인데, ustState 란 hook 을 사용하여
+    input value를 control 하고 업데이트 하여서 컨버터를 만들 수 있는 걸 보여줌.
+    html 의 input 은 입력만이 가능한 태그인데, 여기선 출력을 해서 입력창에 전환값을 보여주고 있음!! 
+ -->
