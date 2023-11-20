@@ -1,8 +1,8 @@
 :root {
-   --pink: rgb(247, 116, 234);
-   --light-lime: rgb(248, 249, 243);
-   --black: #2c2c32;
-   --grey: #969696;	
+   --pink: rgb(142, 155, 233);
+   --light-lime: rgb(189, 223, 19);
+   --black: #151515;
+   --grey: #b6b5b5;	
 }
 * {
    margin: 0;
