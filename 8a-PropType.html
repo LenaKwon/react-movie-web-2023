@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+   <body>
+      <div id="root"></div>
+   </body>
+   <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.development.js"></script>
+   <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+   <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+
+   <!-- inline style 속성은 꼭 ''안에 넣기 -->
+   <!-- return 값은 ();안에 하나의 <div> 로 묶여야함 -->
+   <script type="text/babel">
+      function Btn(props) {
+         console.log(props.text);
+         return (
+            <div>
+               <button
+                  onClick={props.changeValue}
+                  style={{
+                     backgroundColor: 'tomato',
+                     color: 'white',
+                     padding: '10px 20px',
+                     borderRadius: '20px',
+                     border: 'none',
+                  }}>
+                  {props.text}
+               </button>
+            </div>
+         );
+      }
+      Btn.propTypes = {
+         text: PropTypes.string.isRequired,
+         fontSize: PropTypes.number,
+      };
+      function App() {
+         return (
+            <div>
+               <Btn
+                  text={'Change'}
+                  fontSize={'14'}
+               />
+               <Btn
+                  text={'15'}
+                  fontSize={'14'}
+               />
+            </div>
+         );
+      }
+      ReactDOM.createRoot(root).render(<App />);
+   </script>
+</html>
+
+<!-- 
+typescript를 적용하면 proptypes는 적용하지 않아도 된다고 함.
+1. 
+propTypes cdn link 공식홈페이지 보면 최근 패키지변경이 있어서 새로운 라이브러리를 사용하라고 링크가 뜬다
+https://legacy.reactjs.org/docs/typechecking-with-proptypes.html
+https://www.npmjs.com/package/prop-types
+왜 프로덕트로 하면 안되는지는 모르겠지만, 개발용으로 변경하라고 하니
+react, react-dom, proptypes 모두 개발용으로 맞추어 src 복붙하자.
+계속 안되다가 공식문서에서 최신 링크를 복붙하니 동작함.
+2.
+https://www.npmjs.com/package/prop-types
+propTypes 선언시에는 p 소문자 객체안에 속성으로 넣어줄땐 P 대문자 써야함
+위 홈페이지에서도 예시로 쓰여진 부분있으니 참고.
+이렇게 하지 않으면 proptype 이 defined 되지 않았다거나 에러가 계속남.
+제대로 동작시에는 prop type 이 적절치 않다는 경고문이 나옴.
+react.development.js:199 Warning: Failed prop type: Invalid prop `fontSize` of type `string` supplied to `Btn`, expected `number`.
+    at Btn (<anonymous>:4:21)
+    at App
+
+3. 브라우서 ui 에선 에러없이 버튼 보여주는 이유는 syntax error가 없기 때문
+4. 전달되는 prop이 모두 제시될 경우에만 render 하고 싶을때 isRequired 넣어주기-작동안됨
+
+-->

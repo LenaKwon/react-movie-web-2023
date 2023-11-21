@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+   <body>
+      <div id="root"></div>
+   </body>
+   <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+   <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+   <!-- inline style 속성은 꼭 ''안에 넣기 -->
+   <!-- return 값은 ();안에 하나의 <div> 로 묶여야함 -->
+   <script type="text/babel">
+// count seperately
+function SeperateApp() {
+  return (
+    <div>
+      <h1>Counters that update separately</h1>
+      <MyButton />
+      <MyButton />
+    </div>
+  );
+}
+
+function MyButton() {
+  const [count, setCount] = React.useState(0);
+
+  function handleClick() {
+    setCount(count + 1);
+  }
+
+  return (
+    <button onClick={handleClick}>
+      Clicked {count} times
+    </button>
+  );
+}
+ 
+// To make both MyButton components display the same count and update together, 
+// you need to move the state from the individual buttons “upwards” to the closest component containing all of them.
+
+// count together && share data
+function TogetherApp() {
+  const [count, setCount] = useState(0);
+
+  function handleClick() {
+    setCount(count + 1);
+  }
+
+  return (
+    <div>
+      <h1>Counters that update together</h1>
+      <MyButton count={count} onClick={handleClick} />
+      <MyButton count={count} onClick={handleClick} />
+    </div>
+  );
+}
+
+function MyButton() {
+  // ... we're moving code from here ...
+}
+
+      ReactDOM.createRoot(root).render(<SeperateApp />);
+    //   ReactDOM.createRoot(root).render(<TogetherApp />);
+   </script>
+</html>
