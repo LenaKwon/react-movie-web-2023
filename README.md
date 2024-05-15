@@ -1,6 +1,5 @@
 # react-unit-converter app
-
-NomadCoder reactJS 영화앱만들기 4강까지 <br/>
+## to understand state concept 
 
 using ReactJS in-browser babel transformer. 
 
@@ -14,3 +13,6 @@ using ReactJS in-browser babel transformer.
 
 
 <img width="640" alt="Screenshot 2024-05-14 at 7 54 19 PM" src="https://github.com/lenn-dev/react-unit-converter-2023/assets/37726487/97a3cfb3-9dc7-4929-bc11-5f9354bba999">
+
+## Credit
+NomadCoder reactJS 영화앱만들기 4강까지 <br/>
