@@ -1,7 +1,7 @@
 # react-unit-converter app
 ## To understand state concept 
 
-</br>
+
 using ReactJS in-browser babel transformer. 
 
 <img width="640" alt="Screenshot 2024-05-14 at 7 52 33 PM" src="https://github.com/lenn-dev/react-unit-converter-2023/assets/37726487/22671f52-5b4d-4334-a5d3-05286a15c9f0">
